@@ -1,19 +1,22 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormFieldComponent } from '../../../../shared/components/molecules/form-field/form-field.component';
 import { ButtonComponent } from '../../../../shared/components/atoms/button/button.component';
+import { AlertComponent } from '../../../../shared/components/atoms/alert/alert.component';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, FormFieldComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, FormFieldComponent, ButtonComponent, AlertComponent],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
 
   private authService = inject(AuthService);
   private router = inject(Router);
+
+  errorMessage = signal<string | null>(null);
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -36,7 +39,9 @@ export class LoginFormComponent {
         this.authService.saveToken(response.token);
         this.router.navigate(['/products']);
       },
-      error: (err) => console.error('Error:', err)
+      error: (err) => {
+        this.errorMessage.set(err.error?.error ?? 'Ocurrió un error al iniciar sesión');
+      }
     });
   }
 }
