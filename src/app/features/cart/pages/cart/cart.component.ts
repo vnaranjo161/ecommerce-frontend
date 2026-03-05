@@ -11,7 +11,7 @@ import { Cart } from '../../interfaces/cart.interface';
   templateUrl: './cart.component.html'
 })
 export default class CartComponent implements OnInit {
-  
+
   private cartService = inject(CartService);
 
   cart = signal<Cart | null>(null);
@@ -30,7 +30,7 @@ export default class CartComponent implements OnInit {
         this.loading.set(false);
       },
       error: (err) => {
-        this.errorMessage.set(err.error?.message ?? 'Error al cargar el carrito');
+        this.errorMessage.set(err.error?.error ?? 'Error al cargar el carrito');
         this.loading.set(false);
       }
     });

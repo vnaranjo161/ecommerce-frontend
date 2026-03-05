@@ -23,7 +23,7 @@ export default class ProductsComponent implements OnInit {
         this.loading.set(false);
       },
       error: (err) => {
-        this.errorMessage.set(err.error?.message ?? 'Error al cargar los productos');
+        this.errorMessage.set(err.error?.error ?? 'Error al cargar los productos');
         this.loading.set(false);
       }
     });
