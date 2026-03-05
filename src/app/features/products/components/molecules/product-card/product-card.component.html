@@ -17,8 +17,11 @@
       <span class="text-xs text-gray-400">Stock: {{ product().stock }}</span>
     </div>
 
-    <button class="mt-2 w-full bg-blue-600 text-white text-sm py-2 rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
-      Agregar al carrito
+    <button
+      (click)="onAddToCart()"
+      [disabled]="adding()"
+      class="mt-2 w-full bg-blue-600 text-white text-sm py-2 rounded-md hover:bg-blue-700 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+      {{ adding() ? 'Agregando...' : 'Agregar al carrito' }}
     </button>
   </div>
 
