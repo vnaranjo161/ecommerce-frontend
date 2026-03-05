@@ -7,11 +7,11 @@ import { AlertComponent } from '../../../../shared/components/atoms/alert/alert.
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-register-form',
+  selector: 'app-login-form',
   imports: [ReactiveFormsModule, FormFieldComponent, ButtonComponent, AlertComponent],
-  templateUrl: './register-form.component.html'
+  templateUrl: './login-form.component.html'
 })
-export class RegisterFormComponent {
+export class LoginFormComponent {
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -19,9 +19,8 @@ export class RegisterFormComponent {
   errorMessage = signal<string | null>(null);
 
   form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)])
+    password: new FormControl('', Validators.required)
   });
 
   onSubmit() {
@@ -30,10 +29,9 @@ export class RegisterFormComponent {
       return;
     }
 
-    const { name, email, password } = this.form.value;
+    const { email, password } = this.form.value;
 
-    this.authService.register({
-      name: name!,
+    this.authService.login({
       email: email!,
       password: password!
     }).subscribe({
@@ -42,7 +40,7 @@ export class RegisterFormComponent {
         this.router.navigate(['/products']);
       },
       error: (err) => {
-        this.errorMessage.set(err.error?.error ?? 'Ocurrió un error al registrarse');
+        this.errorMessage.set(err.error?.error ?? 'Ocurrió un error al iniciar sesión');
       }
     });
   }

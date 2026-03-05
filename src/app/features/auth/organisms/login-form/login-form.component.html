@@ -1,15 +1,9 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+<form autocomplete="false" [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
 
   @if (errorMessage()) {
     <app-alert [message]="errorMessage()!" (closed)="errorMessage.set(null)" />
   }
 
-  <app-form-field
-    label="Nombre:"
-    inputId="name"
-    placeholder="Nombre completo"
-    [control]="form.controls.name"
-  />
   <app-form-field
     label="Correo electrónico"
     inputId="email"
@@ -25,6 +19,6 @@
     [control]="form.controls.password"
   />
   <div class="mt-2">
-    <app-button label="Registrarme" type="submit" />
+    <app-button label="Iniciar sesión" type="submit" />
   </div>
 </form>
