@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormFieldComponent } from '../../../../shared/components/molecules/form-field/form-field.component';
 import { ButtonComponent } from '../../../../shared/components/atoms/button/button.component';
 import { AuthService } from '../../services/auth.service';
@@ -12,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterFormComponent {
 
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -33,9 +35,10 @@ export class RegisterFormComponent {
       password: password!
     }).subscribe({
       next: (response) => {
-        console.log('Éxito:', response);
-        this.form.reset();
-      }, error: (err) => console.error('Error:', err),
+        this.authService.saveToken(response.token);
+        this.router.navigate(['/products']);
+      },
+      error: (err) => console.error('Error:', err)
     });
   }
 }
