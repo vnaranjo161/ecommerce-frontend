@@ -1,0 +1,33 @@
+<nav class="bg-white shadow-sm border-b border-gray-200 px-6 py-3">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+
+    <a routerLink="/products" class="text-lg font-bold text-blue-600">Tienda</a>
+
+    <div class="flex items-center gap-4">
+      <a
+        routerLink="/products"
+        routerLinkActive="text-blue-600 font-medium"
+        class="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+        Productos
+      </a>
+      <a
+        routerLink="/cart"
+        routerLinkActive="text-blue-600 font-medium"
+        class="text-sm text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1">
+        Carrito
+      </a>
+      <a
+        routerLink="/orders"
+        routerLinkActive="text-blue-600 font-medium"
+        class="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+        Historial
+      </a>
+      <button
+        (click)="onLogout()"
+        class="text-sm text-gray-600 hover:text-blue-600 transition-colors cursor-pointer">
+        Cerrar sesión
+      </button>
+    </div>
+
+  </div>
+</nav>

@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './shared/components/organisms/navbar/navbar.component';
+import { AuthService } from './features/auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'ecommerce-frontend';
+  private authService = inject(AuthService);
+
+  isAuthenticated() {
+    return !!this.authService.getToken();
+  }
 }
