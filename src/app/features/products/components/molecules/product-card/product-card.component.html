@@ -1,0 +1,25 @@
+<div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+
+  <div class="bg-gray-200 h-48 flex items-center justify-center">
+    @if (product().image) {
+      <img [src]="product().image" [alt]="product().name" class="h-full w-full object-cover" />
+    } @else {
+      <span class="text-gray-500 text-sm">Sin imagen</span>
+    }
+  </div>
+
+  <div class="p-4 flex flex-col gap-2 flex-1">
+    <h3 class="font-semibold text-gray-800 text-base">{{ product().name }}</h3>
+    <p class="text-gray-500 text-sm flex-1">{{ product().description }}</p>
+
+    <div class="flex items-center justify-between mt-2">
+      <span class="text-blue-600 font-bold text-lg">{{ product().price | currency:'COP':'code':'1.0-0' }}</span>
+      <span class="text-xs text-gray-400">Stock: {{ product().stock }}</span>
+    </div>
+
+    <button class="mt-2 w-full bg-blue-600 text-white text-sm py-2 rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
+      Agregar al carrito
+    </button>
+  </div>
+
+</div>
