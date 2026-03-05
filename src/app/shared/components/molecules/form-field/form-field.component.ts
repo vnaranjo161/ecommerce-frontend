@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { InputComponent } from '../../atoms/input/input.component';
 
 @Component({
@@ -11,4 +12,5 @@ export class FormFieldComponent {
   inputId = input.required<string>();
   inputType = input<string>('text');
   placeholder = input<string>('');
+  control = input<FormControl>(new FormControl(''));
 }
