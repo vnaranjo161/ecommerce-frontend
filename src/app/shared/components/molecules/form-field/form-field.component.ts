@@ -13,4 +13,5 @@ export class FormFieldComponent {
   inputType = input<string>('text');
   placeholder = input<string>('');
   control = input<FormControl>(new FormControl(''));
+  patternError = input<string>('');
 }

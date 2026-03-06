@@ -11,9 +11,7 @@
   @if (control().touched && control().hasError('required')) {
     <span class="text-red-500 text-xs">Este campo es obligatorio</span>
   } @else if (control().touched && control().hasError('pattern')) {
-    <span class="text-red-500 text-xs">
-      Este campo debe contener únicamente letras.
-    </span>
+    <span class="text-red-500 text-xs">{{ patternError() }}</span>
   } @else if (control().touched && control().hasError('minlength')) {
     <span class="text-red-500 text-xs">
       Mínimo {{ control().getError('minlength').requiredLength }} caracteres
