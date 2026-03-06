@@ -1,0 +1,88 @@
+<div class="min-h-screen bg-gray-100 p-3 sm:p-6">
+
+  <div class="max-w-2xl mx-auto">
+
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Mi carrito</h1>
+      <a routerLink="/products" class="text-sm text-blue-600 hover:underline">Seguir comprando</a>
+    </div>
+
+    @if (loading()) {
+      <p class="text-gray-500">Cargando carrito...</p>
+    } @else if (errorMessage()) {
+      <p class="text-red-500">{{ errorMessage() }}</p>
+    } @else if (!cart() || cart()!.items.length === 0) {
+      <div class="bg-white rounded-lg shadow-md p-8 text-center">
+        <p class="text-gray-500 mb-4">Tu carrito está vacío</p>
+      </div>
+    } @else {
+      <div class="bg-white rounded-lg shadow-md p-3 sm:p-6">
+
+        @for (item of cart()!.items; track item.productId) {
+          <app-cart-item [item]="item" (cartUpdated)="loadCart()" />
+        }
+
+        <div class="flex justify-between items-center pt-4 mt-2">
+          <span class="text-gray-600 font-medium">Total</span>
+          <span class="text-xl font-bold text-blue-600">
+            {{ cart()!.total | currency:'COP':'code':'1.0-0' }}
+          </span>
+        </div>
+
+        <button
+          (click)="openCheckout()"
+          class="mt-6 w-full bg-blue-600 text-white py-3 rounded-md font-medium hover:bg-blue-700 transition-colors cursor-pointer">
+          Proceder al pago
+        </button>
+
+      </div>
+    }
+
+  </div>
+</div>
+
+@if (showCheckoutModal()) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-bold text-gray-800">Datos de envío</h2>
+        <button
+          type="button"
+          (click)="closeCheckout()"
+          class="text-gray-400 hover:text-gray-600 text-2xl leading-none cursor-pointer">&times;</button>
+      </div>
+
+      <form [formGroup]="checkoutForm" (ngSubmit)="onCheckoutSubmit()" class="flex flex-col gap-4">
+        <app-form-field
+          label="Dirección"
+          inputId="address"
+          placeholder="Ej: Calle 123"
+          [control]="checkoutForm.controls.address" />
+
+        <app-form-field
+          label="Teléfono"
+          inputId="phone"
+          placeholder="305123789"
+          patternError="Ingresa un número de teléfono válido."
+          [control]="checkoutForm.controls.phone" />
+
+        <div class="flex gap-3 mt-2">
+          <button
+            type="button"
+            (click)="closeCheckout()"
+            class="flex-1 py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            [disabled]="checkoutLoading()"
+            class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ checkoutLoading() ? 'Procesando...' : 'Confirmar pedido' }}
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+}
