@@ -29,7 +29,9 @@
           </span>
         </div>
 
-        <button class="mt-6 w-full bg-blue-600 text-white py-3 rounded-md font-medium hover:bg-blue-700 transition-colors cursor-pointer">
+        <button
+          (click)="openCheckout()"
+          class="mt-6 w-full bg-blue-600 text-white py-3 rounded-md font-medium hover:bg-blue-700 transition-colors cursor-pointer">
           Proceder al pago
         </button>
 
@@ -38,3 +40,49 @@
 
   </div>
 </div>
+
+@if (showCheckoutModal()) {
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-bold text-gray-800">Datos de envío</h2>
+        <button
+          type="button"
+          (click)="closeCheckout()"
+          class="text-gray-400 hover:text-gray-600 text-2xl leading-none cursor-pointer">&times;</button>
+      </div>
+
+      <form [formGroup]="checkoutForm" (ngSubmit)="onCheckoutSubmit()" class="flex flex-col gap-4">
+        <app-form-field
+          label="Dirección"
+          inputId="address"
+          placeholder="Ej: Calle 123"
+          [control]="checkoutForm.controls.address" />
+
+        <app-form-field
+          label="Teléfono"
+          inputId="phone"
+          placeholder="305123789"
+          patternError="Ingresa un número de teléfono válido."
+          [control]="checkoutForm.controls.phone" />
+
+        <div class="flex gap-3 mt-2">
+          <button
+            type="button"
+            (click)="closeCheckout()"
+            class="flex-1 py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            [disabled]="checkoutLoading()"
+            class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+            {{ checkoutLoading() ? 'Procesando...' : 'Confirmar pedido' }}
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+}
