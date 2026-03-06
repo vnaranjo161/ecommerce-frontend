@@ -19,7 +19,7 @@ export class RegisterFormComponent {
   errorMessage = signal<string | null>(null);
 
   form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('[A-Za-z]+')]),
+    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('[A-Za-zÁÉÍÓÚáéíóúÜüÑñ ]+')]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
