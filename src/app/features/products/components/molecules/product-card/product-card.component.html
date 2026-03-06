@@ -1,11 +1,7 @@
 <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
 
-  <div class="bg-gray-200 h-48 flex items-center justify-center">
-    @if (product().image) {
-      <img [src]="product().image" [alt]="product().name" class="h-full w-full object-cover" />
-    } @else {
-      <span class="text-gray-500 text-sm">Sin imagen</span>
-    }
+  <div class="h-48 overflow-hidden">
+    <img src="images/imagen-productos.jpg" [alt]="product().name" class="h-full w-full object-contain" />
   </div>
 
   <div class="p-4 flex flex-col gap-2 flex-1">
